@@ -1,0 +1,30 @@
+.share-qr-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
+
+.share-qr-container {
+  background: white;
+  padding: 0.5rem;
+  border-radius: 12px;
+  text-align: center;
+  padding: 2rem;
+
+  .share-url {
+    margin: 1rem 0 0;
+    font-size: 0.9rem;
+    color: #666;
+    word-break: break-all;
+    border-radius: 6px;
+    font-size: 0.75rem;
+  }
+}

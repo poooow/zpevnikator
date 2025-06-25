@@ -1,0 +1,20 @@
+.liked-bar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  z-index: 1000;
+  background: #ffffff;
+  align-items: center;
+  padding: 1rem;
+
+  .dark & {
+    background: #2d3748;
+  }
+
+  .title {
+    margin-left: 1rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+}
