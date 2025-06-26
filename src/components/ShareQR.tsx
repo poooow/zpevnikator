@@ -31,7 +31,7 @@ const ShareQR = ({ songId, onClose }: ShareQRProps) => {
   return (
     <div className="share-qr-backdrop">
       <div className="share-qr-container" ref={modalRef}>
-        <QRCodeSVG value={songUrl} size={250} level="H" />
+        <QRCodeSVG value={songUrl} size={250} level="H" className="qr-code"/>
         <p className="share-url">{songUrl}</p>
       </div>
     </div>
