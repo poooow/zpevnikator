@@ -34,7 +34,7 @@ const SearchPage: React.FC = () => {
         <div className="start-search">
           <div className="arrow">
             <IconArrowUp width="6rem" height="6rem" />
-            <p>Můžete začít hledat</p>
+            <p>Můžeš začít hledat</p>
           </div>
           <div className="giraffe">
             <Giraffe />

@@ -19,6 +19,11 @@ const Liked: React.FC = () => {
         {likedSongs?.map((song) => (
           <SongRow key={song.id} song={song} />
         ))}
+        {likedSongs?.length === 0 && (
+          <div className="no-results">
+            <p>Nic tu není. Písničku sem přidáš líbíkem v menu. </p>
+          </div>
+        )}
       </div>
     </div>
   );
