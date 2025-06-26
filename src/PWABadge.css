@@ -17,6 +17,9 @@
     box-shadow: 3px 4px 5px 0 #8885;
     background-color: white;
 }
+.dark .PWABadge-toast {
+    background-color: #2d3748;
+}
 .PWABadge-toast-message {
     margin-bottom: 8px;
 }

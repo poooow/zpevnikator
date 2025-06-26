@@ -5,24 +5,53 @@ import wasm from 'vite-plugin-wasm';
 import topLevelAwait from 'vite-plugin-top-level-await';
 
 // https://vitejs.dev/config/
+// If deploying to a subdirectory, set the base URL to match your deployment path
+// For root deployment, use '/'
 export default defineConfig({
+  base: '/',
+  server: {
+    // Allow serving files from the project root
+    fs: {
+      allow: ['..']
+    }
+  },
+  preview: {
+    // Configure the preview server to handle SPA routing
+    port: 4174,
+    strictPort: true,
+    // This handles SPA fallback in production preview
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate',
+    }
+  },
   plugins: [
     react(),
     wasm(),
     topLevelAwait(),
     VitePWA({
       registerType: 'autoUpdate',
-      injectRegister: 'script',
+      injectRegister: 'auto',
       manifest: {
         name: 'Zpěvníkátor',
         short_name: 'Zpěvníkátor',
         description: 'Zpěvníkátor',
         theme_color: '#ffffff',
+        start_url: '/',
+        display: 'standalone',
+        icons: [
+          {
+            src: '/icon-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+        ]
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,ico,wasm}'],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
+        skipWaiting: true,
+        navigateFallback: '/index.html',
         additionalManifestEntries: [
           { url: '/sql-wasm.wasm', revision: null }
         ],
@@ -30,8 +59,6 @@ export default defineConfig({
       includeAssets: ['**/*.{js,css,html,svg,png,ico,wasm}'],
       devOptions: {
         enabled: false,
-        navigateFallback: 'index.html',
-        suppressWarnings: true,
         type: 'module',
       },
     })
@@ -46,15 +73,13 @@ export default defineConfig({
   },
   build: {
     target: 'esnext', // Needed for top-level await
+    outDir: 'dist',
+    rollupOptions: {
+      input: 'index.html',
+    },
     commonjsOptions: {
       // Ensure SQL.js is properly bundled
       include: [/node_modules/]
-    }
-  },
-  server: {
-    fs: {
-      // Allow serving files from the project root
-      allow: ['..']
     }
   }
 })
