@@ -40,6 +40,6 @@ body {
   background-color: #2d3748;
 }
 
-.dark svg:not(.giraffe) path {
+.dark svg:not(.giraffe):not(.qr-code) path {
   fill: #5e708f;
 }
