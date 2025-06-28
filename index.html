@@ -5,8 +5,9 @@
     <meta content='yes' name='apple-mobile-web-app-capable'/>
     <meta content='yes' name='mobile-web-app-capable'/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" id="theme-color" content="#ffffff" />
     <meta name="description" content="Zpěvníkátor" />
+    <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="/src/fonts.css" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="apple-touch-icon" href="/icon-192x192.png" />
@@ -15,5 +16,15 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      window.updateThemeColor = (isDark) => {
+        const themeColor = document.getElementById('theme-color');
+        themeColor.setAttribute('content', isDark ? '#2d3748' : '#ffffff');
+      };
+      
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.getElementById('theme-color').setAttribute('content', '#2d3748');
+      }
+    </script>
   </body>
 </html>
