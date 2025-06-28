@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useTheme } from "../context/useTheme";
 import { FaHeart, FaEllipsisV, FaMoon, FaSun } from "react-icons/fa";
 import "./SearchBar.scss";
+import { useNavigate } from "react-router-dom";
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
@@ -11,6 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +32,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         setIsMenuOpen(false);
         break;
       case "Like":
-        window.location.href = "/liked";
+        navigate("/liked");
         break;
     }
   };
