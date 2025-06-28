@@ -31,6 +31,12 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
+      srcDir: 'public',
+      filename: 'sw.js',
+      strategies: 'injectManifest',
+      injectManifest: {
+        injectionPoint: undefined,
+      },
       manifest: {
         name: 'Zpěvníkátor',
         short_name: 'Zpěvníkátor',
