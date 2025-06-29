@@ -48,6 +48,16 @@
         max-height: 50vh;
       }
     }
+
+    .progress {
+      color: #bbbbbb;
+      font-size: 1.25rem;
+      font-weight: 500;
+
+      .dark & {
+        color: #5e708f;
+      }
+    }
   }
 
   .no-results {

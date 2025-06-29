@@ -1,9 +1,17 @@
 import { Database } from "sql.js";
 
+export interface DatabaseProgress {
+  status: 'idle' | 'loading' | 'downloading' | 'processing' | 'ready' | 'error';
+  loaded: number;
+  total: number;
+  percentage: number;
+}
+
 export interface DatabaseContextType {
   db: Database | null;
   dbError: Error | null;
   isInitialized: boolean;
+  progress: DatabaseProgress;
 }
 
 export interface DatabaseSchema {
