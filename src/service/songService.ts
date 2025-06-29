@@ -67,9 +67,18 @@ export function getLikedSongs(liked: number[], db: Database): Song[] | null {
 export function searchSongs(query: string, db: Database): Song[] | null {
   if (!query) return null;
 
+  const queryWithWildcard = query + '*';
+
   const results = db.exec(
-    'SELECT rowid as id, groupname as groupName, title, text, snippet(zpevnikator, "<b>", "</b>","...", 4, 10) AS snippet FROM zpevnikator WHERE title MATCH ? OR groupname MATCH ? OR zpevnikator MATCH ? LIMIT 42',
-    [query, query, query]
+    `SELECT rowid as id, 
+       groupname as groupName, 
+      title, 
+      text, 
+      snippet(zpevnikator, "<b>", "</b>","...", 4, 10) as snippet 
+    FROM zpevnikator
+    WHERE title MATCH ? OR groupname MATCH ? OR zpevnikator MATCH ?
+    LIMIT 42`,
+    [queryWithWildcard, queryWithWildcard, queryWithWildcard]
   );
 
   if (results.length === 0 || !results[0]?.values) return [];
