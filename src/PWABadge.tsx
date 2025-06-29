@@ -3,7 +3,7 @@ import './PWABadge.css'
 import { useRegisterSW } from 'virtual:pwa-register/react'
 
 function PWABadge() {
-  // check for updates every hour
+  // check for updates every week
   const period = 60 * 60 * 1000 * 24 * 7
 
   const {
@@ -54,7 +54,7 @@ function PWABadge() {
 export default PWABadge
 
 /**
- * This function will register a periodic sync check every hour, you can modify the interval as needed.
+ * Register a periodic sync check
  */
 function registerPeriodicSync(period: number, swUrl: string, r: ServiceWorkerRegistration) {
   if (period <= 0) return
