@@ -1,5 +1,5 @@
 {
-  "packageId": "eu.kkns.zpevnikator.twa",
+  "packageId": "cz.samius.zpevnik",
   "host": "zpevnikator.kkns.eu",
   "name": "Zpěvníkátor",
   "launcherName": "Zpěvníkátor",
@@ -20,8 +20,8 @@
     "path": "/home/pow/zpevnikator/android/android.keystore",
     "alias": "zpevnikator"
   },
-  "appVersionName": "26",
-  "appVersionCode": 26,
+  "appVersionName": "28",
+  "appVersionCode": 28,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://zpevnikator.kkns.eu/manifest.json",
@@ -42,5 +42,5 @@
   "protocolHandlers": [],
   "fileHandlers": [],
   "launchHandlerClientMode": "",
-  "appVersion": "26"
+  "appVersion": "28"
 }

@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "cz.samius.zpevnik",
+      "sha256_cert_fingerprints":
+        ["06:4B:F1:B5:88:54:60:E4:B0:48:B1:E9:AD:4D:EE:1A:60:B2:49:A2:79:2C:71:52:7C:E8:51:80:F0:A1:D3:B3"]
+    }
+  }
+]

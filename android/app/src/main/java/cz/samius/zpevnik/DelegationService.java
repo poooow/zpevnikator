@@ -1,4 +1,4 @@
-package eu.kkns.zpevnikator.twa;
+package cz.samius.zpevnik;
 
 
 
