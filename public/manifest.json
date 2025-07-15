@@ -1,11 +1,12 @@
 {
   "name": "Zpěvníkátor",
   "short_name": "Zpěvníkátor",
-  "start_url": "/",
+  "start_url": "https://zpevnikator.kkns.eu/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
   "background_color": "#ffffff",
   "lang": "cs",
-  "scope": "/",
+  "scope": "https://zpevnikator.kkns.eu/",
   "description": "Zpěvníkátor",
   "theme_color": "#ffffff",
   "icons": [
