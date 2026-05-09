@@ -1,4 +1,4 @@
-package cz.samius.zpevnik;
+package com.pow.zpevnikator;
 
 
 
