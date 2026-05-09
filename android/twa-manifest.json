@@ -1,5 +1,5 @@
 {
-  "packageId": "cz.samius.zpevnik",
+  "packageId": "com.pow.zpevnikator",
   "host": "zpevnikator.kkns.eu",
   "name": "Zpěvníkátor",
   "launcherName": "Zpěvníkátor",
@@ -21,7 +21,7 @@
     "alias": "zpevnikator"
   },
   "appVersionName": "29",
-  "appVersionCode": 30,
+  "appVersionCode": 31,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://zpevnikator.kkns.eu/manifest.json",
@@ -42,5 +42,6 @@
   "protocolHandlers": [],
   "fileHandlers": [],
   "launchHandlerClientMode": "",
+  "displayOverride": [],
   "appVersion": "29"
 }
