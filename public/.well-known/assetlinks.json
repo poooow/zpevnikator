@@ -1,11 +1,14 @@
 [
   {
-    "relation": ["delegate_permission/common.handle_all_urls"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
     "target": {
       "namespace": "android_app",
-      "package_name": "cz.samius.zpevnik",
-      "sha256_cert_fingerprints":
-        ["06:4B:F1:B5:88:54:60:E4:B0:48:B1:E9:AD:4D:EE:1A:60:B2:49:A2:79:2C:71:52:7C:E8:51:80:F0:A1:D3:B3"]
+      "package_name": "com.pow.zpevnikator",
+      "sha256_cert_fingerprints": [
+        "7E:48:05:CD:01:DD:84:88:09:D4:12:41:B3:D0:82:8C:E7:30:78:63:C1:E9:B6:12:9E:8B:E4:19:B1:60:3C:2E"
+      ]
     }
   }
 ]
