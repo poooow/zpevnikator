@@ -101,7 +101,8 @@ export default defineConfig({
           },
         ],
         additionalManifestEntries: [
-          { url: '/sql-wasm.wasm', revision: null }
+          { url: '/sql-wasm.wasm', revision: null },
+          { url: '/sql-wasm-browser.wasm', revision: null }
         ],
       },
       includeAssets: ['**/*.{js,css,html,svg,png,ico,wasm}'],
