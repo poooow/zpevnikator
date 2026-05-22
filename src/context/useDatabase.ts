@@ -4,6 +4,29 @@ import { DatabaseContextType, DatabaseSchema } from "./types";
 
 const DB_URL = import.meta.env.VITE_DB_URL;
 
+/** Whether the browser supports native gzip decompression. */
+const supportsDecompression = typeof DecompressionStream !== "undefined";
+
+/**
+ * Decompress a gzip ArrayBuffer using the native browser DecompressionStream API.
+ * Supported in Chrome 80+, Firefox 113+, Safari 16.4+.
+ */
+async function decompressGzip(compressed: ArrayBuffer): Promise<ArrayBuffer> {
+  const ds = new DecompressionStream("gzip");
+  const writer = ds.writable.getWriter();
+  writer.write(new Uint8Array(compressed));
+  writer.close();
+  return new Response(ds.readable).arrayBuffer();
+}
+
+/** Check if the buffer is a valid SQLite database by inspecting its magic header. */
+function isSQLite(buffer: ArrayBuffer): boolean {
+  if (buffer.byteLength < 15) return false;
+  const arr = new Uint8Array(buffer, 0, 15);
+  const chars = Array.from(arr).map((b) => String.fromCharCode(b));
+  return chars.join("") === "SQLite format 3";
+}
+
 // Load SQL.js with proper error handling and fallbacks
 const loadSQL = async () => {
   try {
@@ -71,9 +94,22 @@ export const useDatabase = (): DatabaseContextType & {
       // Try to get the database from IndexedDB
       let dbData = await idb.get("database", "main");
 
+      if (dbData && !isSQLite(dbData)) {
+        console.warn("Cached database is invalid or corrupt. Clearing cache and redownloading...");
+        await idb.delete("database", "main");
+        dbData = undefined;
+      }
+
       if (!dbData) {
-        // If not in IndexedDB, fetch from file
-        console.log("Database not found in IndexedDB, importing from file...");
+        // Pick compressed or uncompressed URL based on browser support
+        const useCompressed = supportsDecompression;
+        const downloadUrl = useCompressed ? `${DB_URL}.gz` : DB_URL;
+        console.log(
+          `Database not found in IndexedDB, downloading ${
+            useCompressed ? "compressed" : "uncompressed"
+          } database...`
+        );
+
         setProgress((prev) => ({
           ...prev,
           status: "downloading",
@@ -82,9 +118,10 @@ export const useDatabase = (): DatabaseContextType & {
           percentage: 0,
         }));
 
-        const response = await new Promise<Response>((resolve, reject) => {
+        // Use XHR so we can track download progress
+        const downloadedBuffer = await new Promise<ArrayBuffer>((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          xhr.open("GET", DB_URL, true);
+          xhr.open("GET", downloadUrl, true);
           xhr.responseType = "arraybuffer";
 
           xhr.onprogress = (event) => {
@@ -101,7 +138,7 @@ export const useDatabase = (): DatabaseContextType & {
 
           xhr.onload = () => {
             if (xhr.status >= 200 && xhr.status < 300) {
-              resolve(new Response(xhr.response, { status: xhr.status }));
+              resolve(xhr.response as ArrayBuffer);
             } else {
               reject(new Error(`HTTP ${xhr.status}: ${xhr.statusText}`));
             }
@@ -114,20 +151,30 @@ export const useDatabase = (): DatabaseContextType & {
           xhr.send();
         });
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch database file: ${response.status}`);
+        const isAlreadyDecompressed = isSQLite(downloadedBuffer);
+
+        if (useCompressed && !isAlreadyDecompressed) {
+          // Decompress gzip → raw SQLite bytes using the native browser API
+          setProgress((prev) => ({
+            ...prev,
+            status: "processing",
+            percentage: 100,
+          }));
+          dbData = await decompressGzip(downloadedBuffer);
+        } else {
+          dbData = downloadedBuffer;
         }
 
-        setProgress((prev) => ({
-          ...prev,
-          status: "processing",
-          percentage: 100,
-        }));
+        if (!isSQLite(dbData)) {
+          throw new Error("Downloaded data is not a valid SQLite database.");
+        }
 
-        dbData = await response.arrayBuffer();
-
-        // Save to IndexedDB for future use
+        // Store the decompressed SQLite file in IndexedDB for future visits
         await idb.put("database", dbData, "main");
+      }
+
+      if (!isSQLite(dbData)) {
+        throw new Error("Cached database data is not a valid SQLite database.");
       }
 
       const newDb = new SQL.Database(new Uint8Array(dbData as ArrayBuffer));
