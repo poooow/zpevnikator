@@ -20,8 +20,8 @@
     "path": "/home/pow/zpevnikator/android/android.keystore",
     "alias": "zpevnikator"
   },
-  "appVersionName": "29",
-  "appVersionCode": 31,
+  "appVersionName": "30",
+  "appVersionCode": 32,
   "shortcuts": [],
   "generatorApp": "bubblewrap-cli",
   "webManifestUrl": "https://zpevnikator.kkns.eu/manifest.json",
@@ -43,5 +43,5 @@
   "fileHandlers": [],
   "launchHandlerClientMode": "",
   "displayOverride": [],
-  "appVersion": "29"
+  "appVersion": "30"
 }
